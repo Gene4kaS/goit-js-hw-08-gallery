@@ -94,7 +94,10 @@ const galleryItems = [
     `;
   })
   .join('');
-};
+
+  }
+
+// console.log(galleryItems);
 
 function onPictureClick(evt) {
     evt.preventDefault();
@@ -124,30 +127,36 @@ function onCloseLightBoxClick() {
     }
   }
  
-document.addEventListener("keydown", (evt) => {
-  const currentIndex = cardsMarkup.indexOf(imageLightBox.src);
-  if (evt.key === "ArrowLeft") {
-    leftClick(currentIndex);
-  } else 
-  if (evt.key === "ArrowRight") {
-    rightClick(currentIndex);
-  }
-});
+// document.addEventListener("keydown", (evt) => {
+//   const currentIndex = galleryItems.findIndex((img) =>
+//   img.original === imageLightBox.src
+//   );
+//   if (evt.key === "ArrowLeft") {
+//     leftClick(currentIndex);
+//   } else 
+//   if (evt.key === "ArrowRight") {
+//     rightClick(currentIndex);
+//   }
+// });
 
-function leftClick(currentIndex) {
-  let nextIndex = currentIndex - 1;
-  if (nextIndex === -1) {
-    nextIndex = cardsMarkup.length - 1;
-  }
-  imageLightBox.src = cardsMarkup[nextIndex];
-}
+// function leftClick(currentIndex) {
+//   let nextIndex = currentIndex - 1;
+//   if (nextIndex === -1) {
+//     nextIndex = cardsMarkup.length - 1;
+//   }
+//   imageLightBox.src = cardsMarkup[nextIndex];
+// }
 
-function rightClick(currentIndex) {
-  let nextIndex = currentIndex + 1;
-  if (nextIndex === cardsMarkup.length) {
-    nextIndex = 0;
-  }
-  imageLightBox.src = cardsMarkup[nextIndex];
-}
+// function rightClick(currentIndex) {
+//   let nextIndex = currentIndex ? currentIndex : 0;
+
+//   if (nextIndex < galleryItems.length - 1) {
+//     nextIndex += 1;
+//   } else {
+//     nextIndex = 0;
+//   }
+//   imageLightBox.src = galleryItems[nextIndex].original;
+//   imageLightBox.alt = galleryItems[nextIndex].alt;
+// }
 
 
