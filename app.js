@@ -65,14 +65,24 @@ const galleryItems = [
   ];
 
   const galleryCards = document.querySelector('.js-gallery');
+  const galleryModal = document.querySelector('.js-lightbox')
+  const backdropOverlay = document.querySelector('.lightbox__overlay');
+  const imageLightBox = document.querySelector('.lightbox__image');
+
+  const closeLightBox = document.querySelector('[data-action="close-lightbox"]');
+  
   const cardsMarkup = createGallery(galleryItems);
   galleryCards.insertAdjacentHTML('beforeend', cardsMarkup);
+
+  galleryCards.addEventListener('click', onPictureClick);
+  galleryModal.addEventListener('click', onModalClick);
+  closeLightBox.addEventListener('click', onCloseLightBoxClick);
 
   function createGallery(galleryItems) {
       return galleryItems
         .map(({ preview, original, description }) => {
-      return 
-      `<li class="gallery__item">
+      return `
+      <li class="gallery__item">
       <a class="gallery__link" href="${original}">
         <img
           class="gallery__image"
@@ -80,9 +90,64 @@ const galleryItems = [
           data-source="${original}"
           alt="${description}"/>
       </a>
-    </li>`
+    </li>
+    `;
   })
   .join('');
+};
+
+function onPictureClick(evt) {
+    evt.preventDefault();
+    if (!evt.target.classList.contains('gallery__image')) {
+      return;
+    }
+    window.addEventListener('keydown', onEscPress);
+    galleryModal.classList.add('is-open');
+    imageLightBox.src = evt.target.dataset.source;
 }
 
-console.log(galleryItems);
+function onCloseLightBoxClick() {
+    galleryModal.classList.remove('is-open');
+    window.removeEventListener('keydown', onEscPress);
+    imageLightBox.src = '';
+  }
+  
+  function onModalClick(evt) {
+    if (backdropOverlay === evt.target) {
+        onCloseLightBoxClick();
+    }
+  }
+  function onEscPress(evt) {
+    console.log(evt);
+    if (evt.code === 'Escape') {
+        onCloseLightBoxClick();
+    }
+  }
+ 
+document.addEventListener("keydown", (evt) => {
+  const currentIndex = cardsMarkup.indexOf(imageLightBox.src);
+  if (evt.key === "ArrowLeft") {
+    leftClick(currentIndex);
+  } else 
+  if (evt.key === "ArrowRight") {
+    rightClick(currentIndex);
+  }
+});
+
+function leftClick(currentIndex) {
+  let nextIndex = currentIndex - 1;
+  if (nextIndex === -1) {
+    nextIndex = cardsMarkup.length - 1;
+  }
+  imageLightBox.src = cardsMarkup[nextIndex];
+}
+
+function rightClick(currentIndex) {
+  let nextIndex = currentIndex + 1;
+  if (nextIndex === cardsMarkup.length) {
+    nextIndex = 0;
+  }
+  imageLightBox.src = cardsMarkup[nextIndex];
+}
+
+
