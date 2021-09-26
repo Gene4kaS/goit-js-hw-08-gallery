@@ -128,8 +128,8 @@ function onCloseLightBoxClick() {
   }
  
 // document.addEventListener("keydown", (evt) => {
-//   const currentIndex = galleryItems.findIndex((img) =>
-//   img.original === imageLightBox.src
+//   const currentIndex = galleryItems.findIndex(
+//     (img) => img.original === imageLightBox.src
 //   );
 //   if (evt.key === "ArrowLeft") {
 //     leftClick(currentIndex);
@@ -140,11 +140,15 @@ function onCloseLightBoxClick() {
 // });
 
 // function leftClick(currentIndex) {
-//   let nextIndex = currentIndex - 1;
-//   if (nextIndex === -1) {
-//     nextIndex = cardsMarkup.length - 1;
+//   let nextIndex = currentIndex ? currentIndex : 0;
+
+//   if (nextIndex > galleryItems.length - 1) {
+//     nextIndex -= 1;
+//   } else {
+//     nextIndex = 0;
 //   }
-//   imageLightBox.src = cardsMarkup[nextIndex];
+//   imageLightBox.src = galleryItems[nextIndex].original;
+//   imageLightBox.alt = galleryItems[nextIndex].alt;
 // }
 
 // function rightClick(currentIndex) {
